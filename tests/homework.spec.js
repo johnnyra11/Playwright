@@ -19,7 +19,7 @@ await signIn.click();
 await expect(page.locator(`.toast-success`)).toContainText("Login Successfully");
 
 console.log(await page.title());
-console.log(await itemsName.nth(0).textContent());
+console.log(await itemsName.nth(1).textContent());
 
 await page.pause()
 });
