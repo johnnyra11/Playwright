@@ -30,6 +30,7 @@ test.only('Browser Context Playwright test', async ({ browser }) => {
     // await expect(errorMessage).toContainText("Incorrect");
 
     // Interact with specific product link
-    console.log(await productLinks.first().allTitles); // Logs the text of the first product link
+   // console.log(await productLinks.first().allTitles); // Logs the text of the first product link
+    console.log(allTitles);
 });
-//console.log(allTitles);
+
