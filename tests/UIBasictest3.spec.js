@@ -6,16 +6,19 @@ test.only('Browser Context Playwright Test', async ({ browser }) => {
     const page = await context.newPage();
 
     // Locators
-    const username = page.locator('#username');
-    const password = page.locator('#password');
-    const signIn = page.locator('#signInBtn');
-    const errorMessage = page.locator('div[style*="block"]');
-    const productLinks = page.locator('.card-body a');
-    const cardTitles = page.locator('.card-body a');
-    const dropdown = page.locator('select.form-control');
-    const radioButton = page.locator('.customradio');
-    const termsOfConditions = page.locator('#terms');
-    const okayButton = page.locator('#okayBtn');
+    const locators = {
+        username: page.locator('#username'),
+        password: page.locator('#password'),
+        signIn: page.locator('#signInBtn'),
+        errorMessage: page.locator('div[style*="block"]'),
+        productLinks: page.locator('.card-body a'),
+        cardTitles: page.locator('.card-body a'),
+        dropdown: page.locator('select.form-control'),
+        radioButton: page.locator('.customradio'),
+        termsOfConditions: page.locator('#terms'),
+        okayButton: page.locator('#okayBtn'),
+        documentLink: page.locator("[href*='documents-request']"),
+    };
 
     // Navigate to the login page
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
@@ -25,44 +28,38 @@ test.only('Browser Context Playwright Test', async ({ browser }) => {
     console.log(`Page title: ${await page.title()}`);
 
     // Interact with dropdown
-    await dropdown.selectOption('consult');
+    await locators.dropdown.selectOption('consult');
     console.log('Dropdown selected: consult');
 
-    // Click on the last radio button and confirm the selection
-    await radioButton.last().click();
-    await okayButton.click();
-    console.log(`Radio button checked: ${await radioButton.last().isChecked()}`);
-    await expect(radioButton.last()).toBeChecked();
-    await page.pause()
+    // Interact with the radio button
+    await locators.radioButton.last().click();
+    await locators.okayButton.click();
+    const isChecked = await locators.radioButton.last().isChecked();
+    console.log(`Radio button checked: ${isChecked}`);
+    await expect(locators.radioButton.last()).toBeChecked();
 
     // Interact with the Terms & Conditions checkbox
-    await termsOfConditions.check(); // Select the checkbox
-    await expect(termsOfConditions).toBeChecked();
+    await locators.termsOfConditions.check();
     console.log('Terms & Conditions checkbox selected.');
-    await page.pause()
-    await termsOfConditions.uncheck(); // Deselect the checkbox
-    await expect(termsOfConditions).not.toBeChecked();
+    await expect(locators.termsOfConditions).toBeChecked();
+
+    await locators.termsOfConditions.uncheck();
     console.log('Terms & Conditions checkbox deselected.');
+    await expect(locators.termsOfConditions).not.toBeChecked();
 
-    // Interact with username and password fields (optional example)
-    await username.fill('rahulshetty');
-    await password.fill('learning');
-    await signIn.click();
-
-    // Verify error message (if any)
-    // Uncomment below if you want to check for incorrect login scenarios
-    // await expect(errorMessage).toContainText('Incorrect');
-    // console.log('Error message displayed.');
+    // Fill in login details
+    await locators.username.fill('rahulshetty');
+    await locators.password.fill('learning');
+    await locators.signIn.click();
 
     // Extract and log product card titles
-    const allTitles = await cardTitles.allTextContents();
+    const allTitles = await locators.cardTitles.allTextContents();
     console.log('Product titles:', allTitles);
 
-    // Save the link into a constant
-    const documentLink = page.locator("[href*='documents-request']");
-    // Assert that the documentLink has the attribute class with the value blinkingText
-    await expect(documentLink).toHaveAttribute("class", "blinkingText");
-    await page.pause()
-    // Close the context
+    // Verify the document link attributes
+    await expect(locators.documentLink).toHaveAttribute('class', 'blinkingText');
+    console.log('Verified document link attribute.');
+
+    // Close the browser context
     await context.close();
 });
