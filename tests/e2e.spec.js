@@ -59,4 +59,15 @@ for (let i =0; i < optionsCount; ++i) {
 //await page.pause();
 await expect(page.locator(".user__name [type='text']").first()).toHaveText(email);
 await page.locator(".action__submit").click();
+//await page.pause();
+//Validate
+//const bool2 = await page.locator("h1:has-text('Thankyou for the order')").isVisible();
+//expect(bool2).toBeTruthy();
+//console.log(`${bool2}`)
+//Alternative way to validate
+await expect(page.locator("h1")).toHaveText('Thankyou for the order.');
+const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
+console.log(orderId);
+
+
 });
