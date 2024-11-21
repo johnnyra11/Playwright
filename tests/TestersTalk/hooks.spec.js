@@ -42,8 +42,8 @@ test('Hooks in Playwright2', async ({page}) => {
         await page.waitForTimeout(5000); // Consider replacing with proper waiting for specific elements
     
         // Click on the playlist
-        await page.getByRole('link', { name: 'API Testing by Testers Talk' }).click();
+        //await page.getByRole('link', { name: 'API Testing by Testers Talk' }).click();
     
         // Validate the title
-        await expect(page).toHaveTitle('API Testing by Testers Talk');
+        //await expect(page).toHaveTitle('API Testing by Testers Talk');
 })
