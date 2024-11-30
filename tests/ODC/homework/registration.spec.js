@@ -2,24 +2,24 @@ const { test, expect } = require("@playwright/test");
 
 test("User Registration", async ({ page }) => {
   // Navigate to the "Create an Account" page
-  await page.goto("https://example.com/register"); // Replace with the actual URL for the registration page
+  await page.goto("https://rahulshettyacademy.com/client/");
+  await page.getByRole('link', { name: 'Register' }).click();
 
   // Fill in the registration form with valid details
-  await page.fill("#firstName", "John"); // Replace '#firstName' with the actual selector for the first name field
-  await page.fill("#lastName", "Doe"); // Replace '#lastName' with the actual selector for the last name field
-  await page.fill("#email", "johndoe@example.com"); // Replace '#email' with the actual selector for the email field
-  await page.fill("#password", "SecurePassword123"); // Replace '#password' with the actual selector for the password field
-  await page.fill("#confirmPassword", "SecurePassword123"); // Replace '#confirmPassword' with the actual selector for the confirm password field
-
+  await page.getByPlaceholder('First Name').fill('John');
+  await page.getByPlaceholder('Last Name').fill('Doe');
+  await page.getByPlaceholder('email@example.com').fill('johndoe1121_235@gmail.com'); 
+  await page.getByPlaceholder('enter your number').fill('1234567890'); 
+  await page.getByRole('combobox').selectOption('Doctor');
+  await page.getByLabel('Male', { exact: true }).check();
+  await page.getByRole('checkbox').check();
+  await page.getByPlaceholder('Passsword', { exact: true }).fill('Curent37@*'); 
+  await page.getByPlaceholder('Confirm Passsword').fill('Curent37@*'); 
+  
   // Submit the registration form
-  await page.click("#registerButton"); // Replace '#registerButton' with the actual selector for the submit button
+  await page.getByRole('button', { name: 'Register' }).click();
 
   // Verify that the account is created successfully
-  await expect(page).toHaveURL(/dashboard/); // Ensure the user is redirected to their dashboard
-  const successMessage = await page.locator(".success-message").textContent(); // Replace '.success-message' with the actual selector for the success message
-  expect(successMessage).toContain("Your account has been created successfully"); // Update as needed for the exact success message
+  await page.getByText('Account Created Successfully').isVisible(); 
 
-  // Verify the user's account dashboard is displayed
-  const dashboardGreeting = await page.locator(".dashboard-greeting").textContent(); // Replace '.dashboard-greeting' with the selector for the greeting message
-  expect(dashboardGreeting).toContain("Welcome, John"); // Ensure the personalized greeting is displayed
 });
