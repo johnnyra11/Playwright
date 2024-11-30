@@ -1,6 +1,6 @@
 const { test, expect } = require("@playwright/test");
 
-test("Add a Product to the Cart", async ({ page }) => {
+test("Search a Product", async ({ page }) => {
     // Define the email and product name to be used in the test
     const email = "budemposmotreti11@gmail.com";
     const productName = "ADIDAS ORIGINAL";
@@ -56,7 +56,7 @@ test("Add a Product to the Cart", async ({ page }) => {
     //await page.locator('[routerLink*="cart"]').click(); // Click on the cart icon to view the cart
     await page.getByRole('button', { name: '   Cart' }).click(); // Click on the cart icon to view the cart
 
-    expect(await page.locator("h3:has-text('ADIDAS ORIGINAL')").isVisible()).toBeTruthy(); // Verify that the product is in the cart
+    expect(await page.locator("h3:has-text('ADIDAS ORIGINAL')").isVisible()); // Verify that the product is in the cart
     
    // await page.getByRole('button', { name: 'Buy Now❯' }).click(); // Click on the "Buy Now" button to proceed to checkout
 });
