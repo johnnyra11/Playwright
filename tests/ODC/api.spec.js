@@ -10,4 +10,5 @@ await page.locator("#userPassword").fill('Curent37*');
 await page.locator('[value="Login"]').click();
 await page.waitForLoadState("networkidle");
 
+
 })
