@@ -1,5 +1,5 @@
 const { test, request, expect } = require("@playwright/test");
-const { APIUtils } = require("./utils/APIUtils"); // importam clasa
+const { APIUtils } = require("../utils/APIutils"); // importam clasa
 const loginPayLoad = {
   userEmail: "alex@alex.com",
   userPassword: "Alex!994",

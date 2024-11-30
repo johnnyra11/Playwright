@@ -1,6 +1,6 @@
 const { test, expect } = require("@playwright/test");
 
-test("Add a Product to the Cart", async ({ page }) => {
+test("Checkout", async ({ page }) => {
     // Define the email and product name to be used in the test
     const email = "budemposmotreti11@gmail.com";
     const productName = "ADIDAS ORIGINAL";
