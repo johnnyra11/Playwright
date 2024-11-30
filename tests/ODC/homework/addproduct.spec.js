@@ -1,33 +1,62 @@
 const { test, expect } = require("@playwright/test");
 
 test("Add a Product to the Cart", async ({ page }) => {
-  // Navigate to the website's homepage
-  await page.goto("https://example.com"); // Replace with the actual URL of the website
+    // Define the email and product name to be used in the test
+    const email = "budemposmotreti11@gmail.com";
+    const productName = "ADIDAS ORIGINAL";
 
-  // Search for a product (e.g., "jacket")
-  await page.fill("#searchBar", "jacket"); // Replace '#searchBar' with the actual selector for the search bar
-  await page.click("#searchButton"); // Replace '#searchButton' with the actual selector for the search button
+    // Define the locator for product cards
+    const products = page.locator(".card-body");
 
-  // Wait for the search results to load
-  await page.waitForSelector(".search-results"); // Replace '.search-results' with a selector unique to the search results container
+    // Navigate to the website's client login page
+    await page.goto("https://rahulshettyacademy.com/client");
 
-  // Select the first product from the search results
-  const firstProduct = page.locator(".product-card").first(); // Replace '.product-card' with the selector for a product card
-  await expect(firstProduct).toBeVisible();
-  await firstProduct.click();
+    // Fill in the login form with email and password
+    await page.locator("#userEmail").fill("budemposmotreti11@gmail.com");
+    await page.locator("#userPassword").fill('Curent37*');
 
-  // Choose required attributes (e.g., size, color)
-  await page.selectOption("#sizeDropdown", "Medium"); // Replace '#sizeDropdown' with the actual selector for the size dropdown
-  await page.selectOption("#colorDropdown", "Red"); // Replace '#colorDropdown' with the actual selector for the color dropdown
+    // Click the "Login" button
+    await page.locator('[value="Login"]').click();
 
-  // Click the "Add to Cart" button
-  await page.click("#addToCartButton"); // Replace '#addToCartButton' with the actual selector for the Add to Cart button
+    // Wait for the page to load completely after login
+    await page.waitForLoadState("networkidle");
 
-  // Verify that the product is added to the shopping cart
-  const confirmationMessage = await page.locator(".confirmation-message").textContent(); // Replace '.confirmation-message' with the actual selector for the confirmation message
-  expect(confirmationMessage).toContain("You added jacket to your shopping cart."); // Update as needed for the exact message format
+     // Assert that a confirmation message is visible indicating that the product has been added to the cart
+     await page.locator('div').filter({ hasText: 'Login successful' }).nth(2).isVisible();
 
-  // Verify that the cart icon updates with the correct number of items
-  const cartItemCount = await page.locator("#cartItemCount").textContent(); // Replace '#cartItemCount' with the actual selector for the cart item count
-  expect(parseInt(cartItemCount)).toBeGreaterThan(0); // Ensure the cart count is greater than 0
+    // Optionally, log the titles of all the products listed on the page
+    const titles = await page.locator(".card-body b").allTextContents();
+    console.log(titles);
+
+    // Search for the product "ADIDAS ORIGINAL" in the search bar
+    await page.getByRole('textbox', { name: 'search' }).fill("ADIDAS ORIGINAL");
+
+    // Press "Enter" to submit the search query
+    await page.getByRole('textbox', { name: 'search' }).press('Enter');
+
+    // Get the total number of products displayed after the search
+    const productCount = await products.count();
+
+    // Iterate through all the products to find the one with the name "ADIDAS ORIGINAL"
+    for (let i = 0; i < productCount; i++) {
+        const productText = await products.locator("b").nth(i).textContent(); // Get the name of the product
+
+        // Check if the product name matches "ADIDAS ORIGINAL"
+        if (productText.trim() === productName) {
+            // If it matches, click the "Add To Cart" button for that product
+            await products.nth(i).locator("text= Add To Cart").click();
+            console.log(`Added ${productName} to the cart.`);
+            break; // Exit the loop after adding the product to the cart
+        }
+    }
+
+    // Assert that a confirmation message is visible indicating that the product has been added to the cart
+    await page.locator('div').filter({ hasText: 'Product Added To Cart' }).nth(2).isVisible();
+
+    //await page.locator('[routerLink*="cart"]').click(); // Click on the cart icon to view the cart
+    await page.getByRole('button', { name: '   Cart' }).click(); // Click on the cart icon to view the cart
+
+    expect(await page.locator("h3:has-text('ADIDAS ORIGINAL')").isVisible()).toBeTruthy(); // Verify that the product is in the cart
+    
+   // await page.getByRole('button', { name: 'Buy Now❯' }).click(); // Click on the "Buy Now" button to proceed to checkout
 });
