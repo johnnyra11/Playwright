@@ -8,7 +8,7 @@ test("User Registration", async ({ page }) => {
   // Fill in the registration form with valid details
   await page.getByPlaceholder('First Name').fill('John');
   await page.getByPlaceholder('Last Name').fill('Doe');
-  await page.getByPlaceholder('email@example.com').fill('johndoe1121_235@gmail.com'); 
+  await page.getByPlaceholder('email@example.com').fill('johndoe1421_235@gmail.com'); 
   await page.getByPlaceholder('enter your number').fill('1234567890'); 
   await page.getByRole('combobox').selectOption('Doctor');
   await page.getByLabel('Male', { exact: true }).check();

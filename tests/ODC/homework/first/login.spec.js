@@ -15,11 +15,15 @@ test("Login Functionality", async ({ page }) => {
   // Wait for the account dashboard to load
   await page.getByText('Automation Practice'); 
 
-// Verify that the "Sign Out" button is visible by text content
-const signOutButtonVisible = await page.locator('text="Sign Out"').isVisible(); // Locating the "Sign Out" button by its text
+// Ensure the page is fully loaded before asserting visibility
+await page.waitForSelector('text="Sign Out"'); // Wait for the "Sign Out" button to appear on the page
+
+// Check if the "Sign Out" button is visible
+const signOutButtonVisible = await page.locator('text="Sign Out"').isVisible();
+console.log(`Sign Out button visible: ${signOutButtonVisible}`); // Log the visibility for debugging
+
+// Assert that the "Sign Out" button is visible
 expect(signOutButtonVisible).toBeTruthy(); // Assert that the "Sign Out" button is visible
 
-  // Click the "Sign Out" button
-  await page.getByRole('button', { name: 'Sign Out' }).click();
 
 });

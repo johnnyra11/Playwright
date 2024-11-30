@@ -32,7 +32,7 @@ module.exports = defineConfig({
 
     testIdAttribute: 'autocomplete',
     /* Run tests in headless mode */
-    headless: false
+    headless: true
   },
 
   /* Configure projects for major browsers */
