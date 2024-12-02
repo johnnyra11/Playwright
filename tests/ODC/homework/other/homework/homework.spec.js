@@ -11,6 +11,7 @@ async function generatePhoneNumber() {
   return faker.phone.number("##########"); // Format as 10-digit phone number
 }
 
+
 // Helper Functions
 async function fillRegisterForm(page, locators, testData) {
   await page.locator(locators.firstNameField).fill(testData.firstName);
@@ -39,7 +40,8 @@ test.only("Register, Login, and Validate Product", async ({ browser }) => {
     lastName: faker.person.lastName(),
     email: faker.internet.email(),
     mobile: phoneNumber.replace(/\D/g, "").slice(0, 10),
-    occupation: "Student",
+    occupation: "Doctor",
+    //occupation: page.getByRole('combobox').first().selectOption({ label: 'Doctor' }),
     password: faker.internet.password({
       length: 12,
       memorable: true,

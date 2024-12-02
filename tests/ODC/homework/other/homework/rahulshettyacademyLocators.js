@@ -6,6 +6,7 @@ export const rahulshettyacademyLocators = {
         userEmailField: '#userEmail',
         userMobileField: '#userMobile',
         occupationDropDown: '[formcontrolname="occupation"]',
+        //occupationDropDown: getByRole('combobox'),
         gender: {
             male: '[type="radio"][value="Male"]',
         },
